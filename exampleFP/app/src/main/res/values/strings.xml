@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FPexample</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="title_home">Home</string>
+    <string name="title_account">Account</string>
+    <string name="title_book">Book</string>
+    <string name="title_settings">Settings</string>
+    <string name="welcome">Welcome to Smart Lock</string>
+    <string name="booking">Booking</string>
+    <string name="inCardAct">In card activity</string>
+</resources>
