@@ -1,12 +1,9 @@
 package com.example.fpexample;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.widget.TextView;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -17,9 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.FragmentActivity;
 
-public class CardActivity extends AppCompatActivity {
+public class CardBookingActivity extends AppCompatActivity {
 
     private Button authenticate;
+
+    private TextView parkNameTV;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +28,12 @@ public class CardActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
-        setContentView(R.layout.activity_card);
+        setContentView(R.layout.activity_booking_card);
+
+        parkNameTV = (TextView) findViewById(R.id.idParkName);
+
+        String parkName = getIntent().getStringExtra("park");
+        parkNameTV.setText(parkName);
 
         // BOOK PAGE
 
@@ -53,7 +57,7 @@ public class CardActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                
+
             }
 
             @Override

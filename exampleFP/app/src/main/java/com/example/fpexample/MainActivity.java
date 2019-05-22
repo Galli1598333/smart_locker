@@ -29,12 +29,23 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView welcomeTV;
+
+    // Auth book page
     private Button authenticate;
     private TextView booking;
-
     private RecyclerView bookedRV;
-    private BookingsAdapter mAdapter;
-    private List<Booking> mBookingList;
+    private BookingsAdapter bookingAdapter;
+    private List<Booking> bookingList;
+
+    // To Book Page
+    private TextView toBookTV;
+    private TextView parkToBookTV;
+    private RecyclerView toBookRV;
+    private ToBookAdapter toBookAdapter;
+    private List<ToBook> toBookList;
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
         new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,24 +53,36 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
+                        welcomeTV.setVisibility(View.VISIBLE);
                         booking.setVisibility(View.VISIBLE);
-                        authenticate.setVisibility(View.GONE);
                         bookedRV.setVisibility(View.VISIBLE);
+                        toBookTV.setVisibility(View.GONE);
+                        parkToBookTV.setVisibility(View.GONE);
+                        toBookRV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_account:
+                        welcomeTV.setVisibility(View.GONE);
                         booking.setVisibility(View.GONE);
-                        authenticate.setVisibility(View.GONE);
                         bookedRV.setVisibility(View.GONE);
+                        toBookTV.setVisibility(View.GONE);
+                        parkToBookTV.setVisibility(View.GONE);
+                        toBookRV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_book:
+                        welcomeTV.setVisibility(View.GONE);
                         booking.setVisibility(View.GONE);
-                        authenticate.setVisibility(View.VISIBLE);
                         bookedRV.setVisibility(View.GONE);
+                        toBookTV.setVisibility(View.VISIBLE);
+                        parkToBookTV.setVisibility(View.VISIBLE);
+                        toBookRV.setVisibility(View.VISIBLE);
                         return true;
                     case R.id.navigation_settings:
+                        welcomeTV.setVisibility(View.GONE);
                         booking.setVisibility(View.GONE);
-                        authenticate.setVisibility(View.GONE);
                         bookedRV.setVisibility(View.GONE);
+                        toBookTV.setVisibility(View.GONE);
+                        parkToBookTV.setVisibility(View.GONE);
+                        toBookRV.setVisibility(View.GONE);
                         return true;
                 }
                 return false;
@@ -84,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // END GENERAL SETTINGS
 
+        welcomeTV = (TextView) findViewById(R.id.welcomeView);
+
         // HOME PAGE
 
         booking = (TextView) findViewById(R.id.booking_label);
@@ -91,63 +116,32 @@ public class MainActivity extends AppCompatActivity {
         bookedRV = (RecyclerView) findViewById(R.id.bookedRV);
         bookedRV.setLayoutManager(new LinearLayoutManager(this));
 
-        mBookingList = new ArrayList<Booking>();
-        mBookingList.add(new Booking("Parco della Caffarella", "05:00 pm", "06:45 pm"));
-        mBookingList.add(new Booking("Villa Borghese", "07:00 am", "08:00 am"));
+        bookingList = new ArrayList<Booking>();
+        bookingList.add(new Booking("Parco della Caffarella", "05:00 pm", "06:45 pm"));
+        bookingList.add(new Booking("Villa Borghese", "07:00 am", "08:00 am"));
 
-        mAdapter = new BookingsAdapter(mBookingList, this);
-        bookedRV.setAdapter(mAdapter);
-
+        bookingAdapter = new BookingsAdapter(bookingList, this);
+        bookedRV.setAdapter(bookingAdapter);
 
         // END HOME PAGE
 
+        // START BOOK PAGE
 
-        // BOOK PAGE
+        parkToBookTV = (TextView) findViewById(R.id.parkToBook_label);
+        toBookTV = (TextView) findViewById(R.id.bookView);
 
-        authenticate = (Button) findViewById(R.id.authenticateButton);
+        toBookRV = (RecyclerView) findViewById(R.id.toBookRV);
+        toBookRV.setLayoutManager(new LinearLayoutManager(this));
 
-        Executor executor = Executors.newSingleThreadExecutor();
+        toBookList = new ArrayList<ToBook>();
+        toBookList.add(new ToBook("Parco della Caffarella", "Via Latina"));
+        toBookList.add(new ToBook("Villa Borghese", "Viale San Paolo del Brasile"));
 
-        FragmentActivity activity = this;
+        toBookAdapter = new ToBookAdapter(this, toBookList);
+        toBookRV.setAdapter(toBookAdapter);
 
-        final BiometricPrompt biometricPrompt = new BiometricPrompt(activity, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-                if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
-                    // user clicked negative button
-                } else {
-                    //TODO: Called when an unrecoverable error has been encountered and the operation is complete.
-                }
-            }
-
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                //TODO: Called when a biometric is recognized.
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                //TODO: Called when a biometric is valid but not recognized.
-            }
-        });
-
-        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Set the title to display.")
-                .setSubtitle("Set the subtitle to display.")
-                .setDescription("Set the description to display")
-                .setNegativeButtonText("Negative Button")
-                .build();
-
-        authenticate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                biometricPrompt.authenticate(promptInfo);
-            }
-        });
         // END BOOK PAGE
+
 
     }
 }

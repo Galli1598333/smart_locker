@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bookedCV"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="7dp"
@@ -17,7 +17,7 @@
         app:cardPreventCornerOverlap="false">
 
         <RelativeLayout
-            android:id="@+id/bookedRL"
+            android:id="@+id/toBookRL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/cardview_light_background"
@@ -26,22 +26,13 @@
 
 
             <LinearLayout
-                android:id="@+id/bookedLL"
+                android:id="@+id/toBookLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/parkTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/idLinearLayout"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="25dp"
-                    tools:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/startTV"
+                    android:id="@+id/parkNameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/idLinearLayout"
@@ -50,13 +41,14 @@
                     tools:textColor="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/endTV"
+                    android:id="@+id/parkAddressTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/idLinearLayout"
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="15dp"
                     tools:textColor="@android:color/black" />
+
 
             </LinearLayout>
 

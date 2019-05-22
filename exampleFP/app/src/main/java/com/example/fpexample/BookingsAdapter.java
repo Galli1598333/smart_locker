@@ -20,6 +20,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.MyView
     private Context mContext;
     private List<Booking> bookingList;
 
+    private String parkName;
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -28,7 +30,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.MyView
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), CardActivity.class);
+                Intent i = new Intent(v.getContext(), CardBookingActivity.class);
+                i.putExtra("park", parkName);
                 mContext.startActivity(i);
             }
         });
@@ -38,6 +41,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Booking booking = bookingList.get(position);
+        parkName = booking.getPark();
         holder.park.setText(booking.getPark());
         holder.start.setText("Start: " + booking.getStartTime());
         holder.end.setText("End: " + booking.getEndTime());
