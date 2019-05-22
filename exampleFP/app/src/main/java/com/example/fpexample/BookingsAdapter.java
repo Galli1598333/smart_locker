@@ -19,32 +19,30 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.MyView
 
     private Context mContext;
     private List<Booking> bookingList;
-
-    private String parkName;
+    private View itemView;
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.booking_card, parent, false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), CardBookingActivity.class);
-                i.putExtra("park", parkName);
-                mContext.startActivity(i);
-            }
-        });
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Booking booking = bookingList.get(position);
-        parkName = booking.getPark();
+        final Booking booking = bookingList.get(position);
         holder.park.setText(booking.getPark());
         holder.start.setText("Start: " + booking.getStartTime());
         holder.end.setText("End: " + booking.getEndTime());
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), CardBookingActivity.class);
+                i.putExtra("park", booking.getPark());
+                mContext.startActivity(i);
+            }
+        });
     }
 
 

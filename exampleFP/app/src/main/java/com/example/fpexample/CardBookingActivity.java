@@ -28,6 +28,7 @@ public class CardBookingActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
         setContentView(R.layout.activity_booking_card);
 
         parkNameTV = (TextView) findViewById(R.id.idParkName);

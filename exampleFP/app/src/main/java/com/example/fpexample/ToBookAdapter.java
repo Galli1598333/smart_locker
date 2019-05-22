@@ -1,6 +1,7 @@
 package com.example.fpexample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ public class ToBookAdapter extends RecyclerView.Adapter<ToBookAdapter.MyViewHold
 
     private Context mContext;
     private List<ToBook> toBookList;
+    private View itemView;
 
     public ToBookAdapter(Context mContext, List<ToBook> toBookList) {
         this.mContext = mContext;
@@ -24,16 +26,24 @@ public class ToBookAdapter extends RecyclerView.Adapter<ToBookAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tobook_card, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ToBook toBook = toBookList.get(position);
+        final ToBook toBook = toBookList.get(position);
         holder.parkName.setText("Park name: " + toBook.getParkName());
         holder.parkAddress.setText("Park address: " + toBook.getParkAddress());
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), CardToBookActivity.class);
+                i.putExtra("parkName", toBook.getParkName());
+                mContext.startActivity(i);
+            }
+        });
     }
 
     @Override

@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         toBookList = new ArrayList<ToBook>();
         toBookList.add(new ToBook("Parco della Caffarella", "Via Latina"));
-        toBookList.add(new ToBook("Villa Borghese", "Viale San Paolo del Brasile"));
+        toBookList.add(new ToBook("Villa Borghese", "Viale Pietro Canonica"));
 
         toBookAdapter = new ToBookAdapter(this, toBookList);
         toBookRV.setAdapter(toBookAdapter);
