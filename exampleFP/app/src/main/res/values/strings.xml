@@ -13,4 +13,7 @@
     <string name="CaffMap">Caffarella Map</string>
     <string name="CalButt">Select hour</string>
     <string name="clean">Clean</string>
+    <string name="profile">Your Profile</string>
+    <string name="nearyouhome">Friends near you</string>
+    <string name="book">Book</string>
 </resources>

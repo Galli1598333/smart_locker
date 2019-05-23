@@ -1,10 +1,24 @@
 package com.example.fpexample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -58,6 +72,25 @@ public class CardBookingActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
+
+                OkHttpClient client = new OkHttpClient();
+
+                String url = "http://192.168.43.62:8000";
+
+                RequestBody body = RequestBody.create(null, "submit=On");
+                Request req = new Request.Builder().url(url).post(body).build();
+
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
+
+                try {
+                    Response resp = client.newCall(req).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
 

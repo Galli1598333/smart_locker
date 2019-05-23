@@ -1,5 +1,6 @@
 package com.example.fpexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -101,7 +102,9 @@ public class CardToBookActivity extends AppCompatActivity {
         dateTimeFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonWithNeutralClickListener() {
             @Override
             public void onPositiveButtonClick(Date date) {
-                calView.setText(myDateFormat.format(date));
+                //calView.setText(myDateFormat.format(date));
+                Intent i = new Intent(getApplicationContext(), BookedNearYouActivity.class);
+                startActivity(i);
             }
 
             @Override

@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private ToBookAdapter toBookAdapter;
     private List<ToBook> toBookList;
 
+    // Profile page
+    private TextView profileTV;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookTV.setVisibility(View.GONE);
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
+                        profileTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_account:
                         welcomeTV.setVisibility(View.GONE);
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookTV.setVisibility(View.GONE);
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
+                        profileTV.setVisibility(View.VISIBLE);
                         return true;
                     case R.id.navigation_book:
                         welcomeTV.setVisibility(View.GONE);
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookTV.setVisibility(View.VISIBLE);
                         parkToBookTV.setVisibility(View.VISIBLE);
                         toBookRV.setVisibility(View.VISIBLE);
+                        profileTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_settings:
                         welcomeTV.setVisibility(View.GONE);
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookTV.setVisibility(View.GONE);
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
+                        profileTV.setVisibility(View.GONE);
                         return true;
                 }
                 return false;
@@ -141,6 +148,12 @@ public class MainActivity extends AppCompatActivity {
         toBookRV.setAdapter(toBookAdapter);
 
         // END BOOK PAGE
+
+        // START ACCOUNT PAGE
+
+        profileTV = (TextView) findViewById(R.id.idProfileHome);
+
+        // END ACCOUNT PAGE
 
 
     }
