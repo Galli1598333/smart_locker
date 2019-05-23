@@ -11,4 +11,6 @@
     <string name="parkToBook">Select a Park</string>
     <string name="inCardAct">In card activity</string>
     <string name="CaffMap">Caffarella Map</string>
+    <string name="CalButt">Select hour</string>
+    <string name="clean">Clean</string>
 </resources>
