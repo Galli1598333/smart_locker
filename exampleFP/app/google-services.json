@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "484425132542",
+    "firebase_url": "https://smartlocker-e57ce.firebaseio.com",
+    "project_id": "smartlocker-e57ce",
+    "storage_bucket": "smartlocker-e57ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484425132542:android:d8dcdb0c0e7b9466",
+        "android_client_info": {
+          "package_name": "com.example.fpexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484425132542-48m58cuguvo1s79q287mgg2m099ibh8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL0XV074FyjJqXf-DSfZ5MwppPZhke8uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484425132542-48m58cuguvo1s79q287mgg2m099ibh8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
