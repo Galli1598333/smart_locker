@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.Timestamp;
+import com.google.type.Date;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -33,8 +36,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Booking booking = bookingList.get(position);
         holder.park.setText(booking.getPark());
-        holder.start.setText("Start: " + booking.getStartTime());
-        holder.end.setText("End: " + booking.getEndTime());
+        holder.start.setText(String.format("Date: " + booking.getDate()));
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

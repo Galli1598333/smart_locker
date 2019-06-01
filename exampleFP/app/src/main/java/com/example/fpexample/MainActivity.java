@@ -5,12 +5,19 @@ import androidx.annotation.NonNull;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView usernameTV;
 
     // Auth book page
+    private String user;
     private Button authenticate;
     private TextView booking;
     private RecyclerView bookedRV;
@@ -40,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
     // Profile page
     private TextView profileTV;
 
+    // Settings page
+    private TextView settingsTV;
 
+    // Firebase db
+    private FirebaseFirestore db;
+
+    private final static String TAG = "MainAct";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
         new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.GONE);
+                        settingsTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_account:
                         usernameTV.setVisibility(View.GONE);
@@ -64,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.VISIBLE);
+                        settingsTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_book:
                         usernameTV.setVisibility(View.GONE);
@@ -73,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.VISIBLE);
                         toBookRV.setVisibility(View.VISIBLE);
                         profileTV.setVisibility(View.GONE);
+                        settingsTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_settings:
                         usernameTV.setVisibility(View.GONE);
@@ -82,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.GONE);
+                        settingsTV.setVisibility(View.VISIBLE);
                         return true;
                 }
                 return false;
@@ -93,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // GENERAL SETTINGS
+
         /* Remove action bar */
         try
         {
@@ -104,27 +123,31 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         // END GENERAL SETTINGS
+
+        // DB
+        db = FirebaseFirestore.getInstance();
+
+        // HOME PAGE
 
         usernameTV = (TextView) findViewById(R.id.usernameView);
 
-        String user = getIntent().getStringExtra("User");
+        user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
 
-        usernameTV.setText(user);
-
-        // HOME PAGE
+        usernameTV.setText("Welcome back, " + user);
 
         booking = (TextView) findViewById(R.id.booking_label);
 
         bookedRV = (RecyclerView) findViewById(R.id.bookedRV);
         bookedRV.setLayoutManager(new LinearLayoutManager(this));
 
-        bookingList = new ArrayList<Booking>();
-        bookingList.add(new Booking("Parco della Caffarella", "05:00 pm", "06:45 pm"));
-        bookingList.add(new Booking("Villa Borghese", "07:00 am", "08:00 am"));
+        bookingList = getUserBookings();
 
-        bookingAdapter = new BookingsAdapter(bookingList, this);
-        bookedRV.setAdapter(bookingAdapter);
+        if(bookingList != null) {
+            bookingAdapter = new BookingsAdapter(bookingList, this);
+            bookedRV.setAdapter(bookingAdapter);
+        }
 
         // END HOME PAGE
 
@@ -136,9 +159,7 @@ public class MainActivity extends AppCompatActivity {
         toBookRV = (RecyclerView) findViewById(R.id.toBookRV);
         toBookRV.setLayoutManager(new LinearLayoutManager(this));
 
-        toBookList = new ArrayList<ToBook>();
-        toBookList.add(new ToBook("Parco della Caffarella", "Via Latina"));
-        toBookList.add(new ToBook("Villa Borghese", "Viale Pietro Canonica"));
+        toBookList = getAllParks();
 
         toBookAdapter = new ToBookAdapter(this, toBookList);
         toBookRV.setAdapter(toBookAdapter);
@@ -151,9 +172,59 @@ public class MainActivity extends AppCompatActivity {
 
         // END ACCOUNT PAGE
 
+        // START SETTINGS PAGE
+
+        settingsTV = (TextView) findViewById(R.id.idSettingsTV);
+
+        // END SETTINGS PAGE
+
 
     }
 
+    private List<ToBook> getAllParks(){
+        final List<ToBook> parkList = new ArrayList<ToBook>();
+        db.collection("parks")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                parkList.add(new ToBook(document.getString("parkName"), document.getString("parkAddress")));
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
 
+                    }
+                });
+        return parkList;
+    }
+
+    private List<Booking> getUserBookings(){
+        final List<Booking> userBookings = new ArrayList<Booking>();
+        db.collection("bookings")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //if(document != null) {
+                                if (document.getString("user").equals(user)) {
+                                    userBookings.add(new Booking(document.getString("user"), document.getString("parkName"), document.getString("date")));
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                                //}
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
+        return userBookings;
+    }
 
 }

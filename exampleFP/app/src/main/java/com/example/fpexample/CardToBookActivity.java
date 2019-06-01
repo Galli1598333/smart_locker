@@ -8,15 +8,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +38,11 @@ public class CardToBookActivity extends AppCompatActivity {
 
     private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
 
-    private static final String TAG = "Calendar";
+    private static final String TAG = "Booking";
+    private String parkName;
+
+    // Firebase db
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +56,10 @@ public class CardToBookActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_tobook_card);
 
-        String parkName = getIntent().getStringExtra("parkName");
+        // DB
+        db = FirebaseFirestore.getInstance();
+
+        parkName = getIntent().getStringExtra("parkName");
 
         TextView parkLabel = (TextView) findViewById(R.id.idParkName);
         ImageView parkMap = (ImageView) findViewById(R.id.idParkImg);
@@ -103,6 +119,7 @@ public class CardToBookActivity extends AppCompatActivity {
             @Override
             public void onPositiveButtonClick(Date date) {
                 //calView.setText(myDateFormat.format(date));
+                addBooking(parkName, date);
                 Intent i = new Intent(getApplicationContext(), BookedNearYouActivity.class);
                 startActivity(i);
             }
@@ -131,4 +148,30 @@ public class CardToBookActivity extends AppCompatActivity {
         });
 
     }
+
+    private void addBooking(String park, Date date){
+        String user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+        String strDate = dateFormat.format(date);
+        Map<String, Object> booking = new HashMap<>();
+        booking.put("user", user);
+        booking.put("parkName", park);
+        booking.put("date", strDate);
+
+        db.collection("bookings").document(UUID.randomUUID().toString())
+                .set(booking)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
 }

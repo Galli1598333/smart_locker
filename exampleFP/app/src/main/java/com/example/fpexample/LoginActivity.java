@@ -18,16 +18,19 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "Login";
 
     private LoginButton loginButton;
+
+    // Firebase db
+    private FirebaseFirestore db;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -69,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
+        // DB
+        db = FirebaseFirestore.getInstance();
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -95,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        handleResponse(currentUser);
     }
     // [END on_start_check_user]
 
@@ -118,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            //Log.d(TAG, "USER EMAIL: " + user.getEmail());
                             handleResponse(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -134,12 +145,36 @@ public class LoginActivity extends AppCompatActivity {
     private void handleResponse(FirebaseUser user) {
         if (user != null) {
             //info.setText(user.getDisplayName());
+            addUser(user);
             Intent mainInt = new Intent(this, MainActivity.class);
-            mainInt.putExtra("User", user.getDisplayName());
+            //mainInt.putExtra("Email", user.getEmail());
             startActivity(mainInt);
+            finish();
         } else {
             info.setText(R.string.signed_out);
         }
+    }
+
+    // Add user to db
+    private void addUser(FirebaseUser user){
+
+        Map<String, Object> us = new HashMap<>();
+        us.put("username", user.getDisplayName());
+
+        db.collection("users").document(user.getUid())
+                .set(us, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
 

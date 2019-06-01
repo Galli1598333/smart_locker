@@ -1,38 +1,41 @@
 package com.example.fpexample;
 
+
+import com.google.firebase.Timestamp;
+
 public class Booking {
 
+    private String user;
     private String park;
-    private String startTime;
-    private String endTime;
+    private String date;
 
-    public Booking(String park, String start, String end) {
+    public Booking(String user, String park, String date) {
+        this.user = user;
         this.park = park;
-        this.startTime = start;
-        this.endTime = end;
+        this.date = date;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getPark() {
         return park;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
     public void setPark(String park) {
         this.park = park;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 }
