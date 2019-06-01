@@ -7,13 +7,12 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/welcomeView"
+        android:id="@+id/usernameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="129dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="130dp"
-        android:text="@string/welcome"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +60,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeView" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookedRV"

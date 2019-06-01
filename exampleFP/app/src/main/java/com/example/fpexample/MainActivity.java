@@ -1,35 +1,27 @@
 package com.example.fpexample;
 
 import androidx.annotation.NonNull;
-import androidx.biometric.BiometricPrompt;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView welcomeTV;
+    private TextView usernameTV;
 
     // Auth book page
     private Button authenticate;
@@ -56,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        welcomeTV.setVisibility(View.VISIBLE);
+                        usernameTV.setVisibility(View.VISIBLE);
                         booking.setVisibility(View.VISIBLE);
                         bookedRV.setVisibility(View.VISIBLE);
                         toBookTV.setVisibility(View.GONE);
@@ -65,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         profileTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_account:
-                        welcomeTV.setVisibility(View.GONE);
+                        usernameTV.setVisibility(View.GONE);
                         booking.setVisibility(View.GONE);
                         bookedRV.setVisibility(View.GONE);
                         toBookTV.setVisibility(View.GONE);
@@ -74,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         profileTV.setVisibility(View.VISIBLE);
                         return true;
                     case R.id.navigation_book:
-                        welcomeTV.setVisibility(View.GONE);
+                        usernameTV.setVisibility(View.GONE);
                         booking.setVisibility(View.GONE);
                         bookedRV.setVisibility(View.GONE);
                         toBookTV.setVisibility(View.VISIBLE);
@@ -83,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         profileTV.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_settings:
-                        welcomeTV.setVisibility(View.GONE);
+                        usernameTV.setVisibility(View.GONE);
                         booking.setVisibility(View.GONE);
                         bookedRV.setVisibility(View.GONE);
                         toBookTV.setVisibility(View.GONE);
@@ -114,7 +106,11 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // END GENERAL SETTINGS
 
-        welcomeTV = (TextView) findViewById(R.id.welcomeView);
+        usernameTV = (TextView) findViewById(R.id.usernameView);
+
+        String user = getIntent().getStringExtra("User");
+
+        usernameTV.setText(user);
 
         // HOME PAGE
 
@@ -157,4 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }
