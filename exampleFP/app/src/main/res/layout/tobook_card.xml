@@ -37,16 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/idLinearLayout"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="15dp"
-                    tools:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/parkAddressTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/idLinearLayout"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="15dp"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     tools:textColor="@android:color/black" />
 
 

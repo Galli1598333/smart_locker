@@ -34,12 +34,13 @@ public class ToBookAdapter extends RecyclerView.Adapter<ToBookAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final ToBook toBook = toBookList.get(position);
-        holder.parkName.setText("Park name: " + toBook.getParkName());
-        holder.parkAddress.setText("Park address: " + toBook.getParkAddress());
+        holder.parkName.setText(toBook.getParkName());
+        //holder.parkAddress.setText("Park address: " + toBook.getParkAddress());
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), CardToBookActivity.class);
+                i.putExtra("parkAddress", toBook.getParkAddress());
                 i.putExtra("parkName", toBook.getParkName());
                 mContext.startActivity(i);
             }
@@ -58,7 +59,7 @@ public class ToBookAdapter extends RecyclerView.Adapter<ToBookAdapter.MyViewHold
         public MyViewHolder(View view) {
             super(view);
             parkName = (TextView) view.findViewById(R.id.parkNameTV);
-            parkAddress = (TextView) view.findViewById(R.id.parkAddressTV);
+            //parkAddress = (TextView) view.findViewById(R.id.parkAddressTV);
         }
     }
 

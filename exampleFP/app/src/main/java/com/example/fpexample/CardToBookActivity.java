@@ -1,6 +1,8 @@
 package com.example.fpexample;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,12 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -49,6 +53,7 @@ public class CardToBookActivity extends AppCompatActivity {
 
     private static final String TAG = "Booking";
     private String parkName;
+    private String parkAddress;
 
     // Firebase db
     private FirebaseFirestore db;
@@ -69,9 +74,13 @@ public class CardToBookActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         parkName = getIntent().getStringExtra("parkName");
+        parkAddress = getIntent().getStringExtra("parkAddress");
+
+        final double[] coordinates = getCoordinates(parkAddress);
 
         TextView parkLabel = (TextView) findViewById(R.id.idParkName);
-        //ImageView parkMap = (ImageView) findViewById(R.id.idParkImg);
+        parkLabel.setText(parkName);
+
         mapView = (MapView) findViewById(R.id.idMapView);
 
         mapView.onCreate(savedInstanceState);
@@ -80,27 +89,14 @@ public class CardToBookActivity extends AppCompatActivity {
             public void onMapReady(GoogleMap googleMap) {
                 map = googleMap;
                 map.getUiSettings().setMyLocationButtonEnabled(false);
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(	41.89193, 12.51133), 12.0f));
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(		coordinates[0], 	coordinates[1]), 17));
+                map.addMarker(new MarkerOptions()
+                        .position(new LatLng(coordinates[0], coordinates[1]))
+                        .title("Marker"));
             }
         });
 
         mapView.onResume();
-
-        int img_source;
-
-        parkLabel.setText(parkName);
-
-        if(parkName.equals("Parco della Caffarella")){
-            img_source = getResources().getIdentifier("@drawable/caffarellapark", null, this.getPackageName());
-        }
-        else if(parkName.equals("Villa Borghese")){
-            img_source = getResources().getIdentifier("@drawable/villaborghese", null, this.getPackageName());
-        }
-        else{
-            img_source = getResources().getIdentifier("@drawable/error", null, this.getPackageName());
-        }
-
-        //parkMap.setImageResource(img_source);
 
         // CALENDAR WIDGET
 
@@ -196,6 +192,23 @@ public class CardToBookActivity extends AppCompatActivity {
                 });
     }
 
-
+    private double[] getCoordinates(String address){
+        double[] coordinates = new double[2];
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geoCoder.getFromLocationName(address, 5);
+            if (addresses.size() > 0) {
+                Double lat = (double) (addresses.get(0).getLatitude());
+                Double lon = (double) (addresses.get(0).getLongitude());
+                coordinates[0] = lat;
+                coordinates[1] = lon;
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return coordinates;
+    }
 
 }
