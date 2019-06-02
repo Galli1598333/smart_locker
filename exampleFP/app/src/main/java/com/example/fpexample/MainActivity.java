@@ -2,6 +2,7 @@ package com.example.fpexample;
 
 import androidx.annotation.NonNull;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Auth book page
     private String user;
-    private Button authenticate;
     private TextView booking;
     private RecyclerView bookedRV;
     private BookingsAdapter bookingAdapter;
     private List<Booking> bookingList;
+
+    private FirebaseAuth mAuth;
 
     // To Book Page
     private TextView toBookTV;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Settings page
     private TextView settingsTV;
+    private Button signOutBtn;
 
     // Firebase db
     private FirebaseFirestore db;
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.GONE);
                         settingsTV.setVisibility(View.GONE);
+                        signOutBtn.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_account:
                         usernameTV.setVisibility(View.GONE);
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.VISIBLE);
                         settingsTV.setVisibility(View.GONE);
+                        signOutBtn.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_book:
                         usernameTV.setVisibility(View.GONE);
@@ -90,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookRV.setVisibility(View.VISIBLE);
                         profileTV.setVisibility(View.GONE);
                         settingsTV.setVisibility(View.GONE);
+                        signOutBtn.setVisibility(View.GONE);
                         return true;
                     case R.id.navigation_settings:
                         usernameTV.setVisibility(View.GONE);
@@ -100,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.GONE);
                         settingsTV.setVisibility(View.VISIBLE);
+                        signOutBtn.setVisibility(View.VISIBLE);
                         return true;
                 }
                 return false;
@@ -123,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // [START initialize_auth]
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
 
         // END GENERAL SETTINGS
 
@@ -175,6 +188,14 @@ public class MainActivity extends AppCompatActivity {
         // START SETTINGS PAGE
 
         settingsTV = (TextView) findViewById(R.id.idSettingsTV);
+        signOutBtn = (Button) findViewById(R.id.buttonFacebookSignout);
+
+        signOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
 
         // END SETTINGS PAGE
 
@@ -225,6 +246,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         return userBookings;
+    }
+
+    private void signOut() {
+        mAuth.signOut();
+        LoginManager.getInstance().logOut();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
 }

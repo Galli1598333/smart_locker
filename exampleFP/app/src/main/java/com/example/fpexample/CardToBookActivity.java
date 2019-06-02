@@ -8,6 +8,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +42,9 @@ public class CardToBookActivity extends AppCompatActivity {
 
     private SwitchDateTimeDialogFragment dateTimeFragment;
 
+    private MapView mapView;
+    private GoogleMap map;
+
     private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
 
     private static final String TAG = "Booking";
@@ -62,7 +71,20 @@ public class CardToBookActivity extends AppCompatActivity {
         parkName = getIntent().getStringExtra("parkName");
 
         TextView parkLabel = (TextView) findViewById(R.id.idParkName);
-        ImageView parkMap = (ImageView) findViewById(R.id.idParkImg);
+        //ImageView parkMap = (ImageView) findViewById(R.id.idParkImg);
+        mapView = (MapView) findViewById(R.id.idMapView);
+
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                map = googleMap;
+                map.getUiSettings().setMyLocationButtonEnabled(false);
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(	41.89193, 12.51133), 12.0f));
+            }
+        });
+
+        mapView.onResume();
 
         int img_source;
 
@@ -78,7 +100,7 @@ public class CardToBookActivity extends AppCompatActivity {
             img_source = getResources().getIdentifier("@drawable/error", null, this.getPackageName());
         }
 
-        parkMap.setImageResource(img_source);
+        //parkMap.setImageResource(img_source);
 
         // CALENDAR WIDGET
 
@@ -173,5 +195,7 @@ public class CardToBookActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 
 }

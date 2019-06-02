@@ -6,16 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/idParkImg"
-        android:layout_width="280dp"
-        android:layout_height="272dp"
-        android:layout_marginTop="184dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/idParkName"
         android:layout_width="wrap_content"
@@ -23,7 +13,6 @@
         android:layout_marginStart="176dp"
         android:layout_marginTop="83dp"
         android:layout_marginEnd="176dp"
-        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,13 +36,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="177dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="176dp"
-        android:layout_marginBottom="232dp"
+        android:layout_marginBottom="192dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idParkImg"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/idMapView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/idMapView"
+        android:layout_width="323dp"
+        android:layout_height="302dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="181dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idParkName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,5 +20,6 @@
     <string name="fb_login_protocol_scheme">fb188270735413547</string>
     <string name="facebook_status_fmt">Facebook User: %s</string>
     <string name="signed_out">Sign Out</string>
+    <string name="title_activity_card_to_book">Map</string>
 
 </resources>
