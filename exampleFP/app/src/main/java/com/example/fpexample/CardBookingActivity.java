@@ -102,7 +102,7 @@ public class CardBookingActivity extends AppCompatActivity {
         });
 
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Set the title to display.")
+                .setTitle("Put your finger over the sensor")
                 .setSubtitle("Set the subtitle to display.")
                 .setDescription("Set the description to display")
                 .setNegativeButtonText("Negative Button")

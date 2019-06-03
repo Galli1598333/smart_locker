@@ -1,13 +1,15 @@
 package com.example.fpexample;
 
+import com.google.firebase.firestore.IgnoreExtraProperties;
 
-import com.google.firebase.Timestamp;
-
+@IgnoreExtraProperties
 public class Booking {
 
     private String user;
     private String park;
     private String date;
+
+    public Booking(){ }
 
     public Booking(String user, String park, String date) {
         this.user = user;

@@ -1,9 +1,14 @@
 package com.example.fpexample;
 
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class ToBook {
 
     private String parkName;
     private String parkAddress;
+
+    public ToBook(){ }
 
     public ToBook(String parkName, String parkAddress) {
         this.parkName = parkName;

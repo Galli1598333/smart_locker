@@ -7,23 +7,30 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private String user;
     private TextView booking;
     private RecyclerView bookedRV;
-    private BookingsAdapter bookingAdapter;
+    private FirestoreRecyclerAdapter bookingAdapter;
     private List<Booking> bookingList;
 
     private FirebaseAuth mAuth;
@@ -45,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView toBookTV;
     private TextView parkToBookTV;
     private RecyclerView toBookRV;
-    private ToBookAdapter toBookAdapter;
+    private FirestoreRecyclerAdapter toBookAdapter;
     private List<ToBook> toBookList;
 
     // Profile page
@@ -155,12 +162,7 @@ public class MainActivity extends AppCompatActivity {
         bookedRV = (RecyclerView) findViewById(R.id.bookedRV);
         bookedRV.setLayoutManager(new LinearLayoutManager(this));
 
-        bookingList = getUserBookings();
-
-        if(bookingList != null) {
-            bookingAdapter = new BookingsAdapter(bookingList, this);
-            bookedRV.setAdapter(bookingAdapter);
-        }
+        getUserBookings();
 
         // END HOME PAGE
 
@@ -172,10 +174,7 @@ public class MainActivity extends AppCompatActivity {
         toBookRV = (RecyclerView) findViewById(R.id.toBookRV);
         toBookRV.setLayoutManager(new LinearLayoutManager(this));
 
-        toBookList = getAllParks();
-
-        toBookAdapter = new ToBookAdapter(this, toBookList);
-        toBookRV.setAdapter(toBookAdapter);
+        getAllParks();
 
         // END BOOK PAGE
 
@@ -202,50 +201,99 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private List<ToBook> getAllParks(){
-        final List<ToBook> parkList = new ArrayList<ToBook>();
-        db.collection("parks")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                parkList.add(new ToBook(document.getString("parkName"), document.getString("parkAddress")));
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+    private void getAllParks(){
+        Query query = db.collection("parks");
 
+        FirestoreRecyclerOptions<ToBook> response = new FirestoreRecyclerOptions.Builder<ToBook>()
+                .setQuery(query, ToBook.class)
+                .build();
+
+        toBookAdapter = new FirestoreRecyclerAdapter<ToBook, ToBookHolder>(response) {
+
+            @NonNull
+            @Override
+            public ToBookHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.tobook_card, parent, false);
+                return new ToBookHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ToBookHolder toBookHolder, int i, @NonNull final ToBook toBook) {
+                toBookHolder.parkName.setText(toBook.getParkName());
+                toBookHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), CardToBookActivity.class);
+                        i.putExtra("parkAddress", toBook.getParkAddress());
+                        i.putExtra("parkName", toBook.getParkName());
+                        v.getContext().startActivity(i);
                     }
                 });
-        return parkList;
+            }
+        };
+        toBookAdapter.notifyDataSetChanged();
+        toBookRV.setAdapter(toBookAdapter);
     }
 
-    private List<Booking> getUserBookings(){
-        final List<Booking> userBookings = new ArrayList<Booking>();
-        db.collection("bookings")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //if(document != null) {
-                                if (document.getString("user").equals(user)) {
-                                    userBookings.add(new Booking(document.getString("user"), document.getString("parkName"), document.getString("date")));
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                }
-                                //}
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+    private void getUserBookings(){
+        Query query = db.collection("bookings").whereEqualTo("user", user);
 
+        FirestoreRecyclerOptions<Booking> response = new FirestoreRecyclerOptions.Builder<Booking>()
+                .setQuery(query, Booking.class)
+                .build();
+
+        bookingAdapter = new FirestoreRecyclerAdapter<Booking, BookingHolder>(response) {
+
+            @NonNull
+            @Override
+            public BookingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.booking_card, parent, false);
+                return new BookingHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull BookingHolder bookingHolder, int i, @NonNull final Booking booking) {
+                Log.d(TAG, booking.getDate());
+                bookingHolder.parkB.setText(booking.getPark());
+                bookingHolder.dateB.setText(booking.getDate());
+                bookingHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), CardBookingActivity.class);
+                        i.putExtra("park", booking.getPark());
+                        v.getContext().startActivity(i);
                     }
                 });
-        return userBookings;
+            }
+        };
+        bookingAdapter.notifyDataSetChanged();
+        bookedRV.setAdapter(bookingAdapter);
+    }
+
+    public class BookingHolder extends RecyclerView.ViewHolder{
+
+        @BindView(R.id.parkTV)
+        TextView parkB;
+        @BindView(R.id.dateTV)
+        TextView dateB;
+
+        public BookingHolder(View itemView){
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+    }
+
+    public class ToBookHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.parkNameTV)
+        TextView parkName;
+
+        public ToBookHolder(View itemView){
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 
     private void signOut() {
@@ -256,4 +304,18 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bookingAdapter.startListening();
+        toBookAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        bookingAdapter.stopListening();
+        toBookAdapter.stopListening();
+    }
 }
