@@ -16,15 +16,21 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -54,9 +60,13 @@ public class CardToBookActivity extends AppCompatActivity {
     private static final String TAG = "Booking";
     private String parkName;
     private String parkAddress;
+    private String user;
 
     // Firebase db
     private FirebaseFirestore db;
+
+    //Near
+    private List<Booking> nearYou;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +85,10 @@ public class CardToBookActivity extends AppCompatActivity {
 
         parkName = getIntent().getStringExtra("parkName");
         parkAddress = getIntent().getStringExtra("parkAddress");
+        user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+        nearYou = new ArrayList<Booking>();
+        getNearBookings();
 
         final double[] coordinates = getCoordinates(parkAddress);
 
@@ -105,10 +119,27 @@ public class CardToBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), BookedNearYouActivity.class);
                 i.putExtra("parkName", parkName);
+                i.putExtra("nearYou", (Serializable) nearYou);
                 startActivity(i);
             }
         });
 
+    }
+
+    private void getNearBookings(){
+        db.collection("bookings")
+                .whereEqualTo("park", parkName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot doc : task.getResult()){
+                            if(!doc.get("user").equals(user)){
+                                nearYou.add(doc.toObject(Booking.class));
+                            }
+                        }
+                    }
+                });
     }
 
     private double[] getCoordinates(String address){

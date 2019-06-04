@@ -11,12 +11,18 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
+import com.firebase.ui.firestore.SnapshotParser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -51,7 +57,8 @@ public class BookedNearYouActivity extends AppCompatActivity {
     private TextView calView;
 
     private RecyclerView friendsRV;
-    private FirestoreRecyclerAdapter bookedNearAdapter;
+    private BookedNearYouAdapter bookedNearAdapter;
+    private List<Booking> nearYou;
 
     private String parkName;
     private String user;
@@ -82,9 +89,13 @@ public class BookedNearYouActivity extends AppCompatActivity {
         // DB
         db = FirebaseFirestore.getInstance();
 
-
         // Near bookings
-        getNearBookings();
+
+        nearYou = (List<Booking>) getIntent().getSerializableExtra("nearYou");
+        Log.d(TAG, "Size near you: " + nearYou.size());
+
+        bookedNearAdapter = new BookedNearYouAdapter(nearYou);
+        friendsRV.setAdapter(bookedNearAdapter);
 
         // CALENDAR WIDGET
 
@@ -163,6 +174,7 @@ public class BookedNearYouActivity extends AppCompatActivity {
         booking.put("user", user);
         booking.put("park", park);
         booking.put("date", strDate);
+        booking.put("hash", user.hashCode());
 
         db.collection("bookings").document(UUID.randomUUID().toString())
                 .set(booking)
@@ -180,11 +192,12 @@ public class BookedNearYouActivity extends AppCompatActivity {
                 });
     }
 
-    private void addBookingDateString(String park, String date){
+    private void addBookingDateString(String park, String date) {
         Map<String, Object> booking = new HashMap<>();
         booking.put("user", user);
         booking.put("park", park);
         booking.put("date", date);
+        booking.put("hash", user.hashCode());
 
         db.collection("bookings").document(UUID.randomUUID().toString())
                 .set(booking)
@@ -200,70 +213,6 @@ public class BookedNearYouActivity extends AppCompatActivity {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
-    }
-
-    private void getNearBookings(){
-        Query query = db.collection("bookings").whereEqualTo("park", parkName);
-
-        FirestoreRecyclerOptions<Booking> response = new FirestoreRecyclerOptions.Builder<Booking>()
-                .setQuery(query, Booking.class)
-                .build();
-
-        bookedNearAdapter = new FirestoreRecyclerAdapter<Booking, NearBookingHolder>(response) {
-
-            @NonNull
-            @Override
-            public NearBookingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.nearyou_card, parent, false);
-                return new NearBookingHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull NearBookingHolder nearBookingHolder, int i, @NonNull final Booking booking) {
-                if(!user.equals(booking.getUser())){
-                    nearBookingHolder.friendTV.setText(booking.getUser());
-                    nearBookingHolder.parkTV.setText(booking.getPark());
-                    nearBookingHolder.dateTV.setText(booking.getDate());
-                    nearBookingHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            addBookingDateString(booking.getPark(), booking.getDate());
-                            Intent i = new Intent(v.getContext(), MainActivity.class);
-                            v.getContext().startActivity(i);
-                        }
-                    });
-                }
-            }
-        };
-        bookedNearAdapter.notifyDataSetChanged();
-        friendsRV.setAdapter(bookedNearAdapter);
-    }
-
-    public class NearBookingHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.friendTV)
-        TextView friendTV;
-        @BindView(R.id.parkTV)
-        TextView parkTV;
-        @BindView(R.id.dateTV)
-        TextView dateTV;
-
-        public NearBookingHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        bookedNearAdapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        bookedNearAdapter.stopListening();
     }
 
 }

@@ -2,8 +2,10 @@ package com.example.fpexample;
 
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class Booking {
+public class Booking implements Serializable {
 
     private String user;
     private String park;
