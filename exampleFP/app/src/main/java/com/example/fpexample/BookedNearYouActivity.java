@@ -135,9 +135,11 @@ public class BookedNearYouActivity extends AppCompatActivity {
         dateTimeFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonWithNeutralClickListener() {
             @Override
             public void onPositiveButtonClick(Date date) {
-                //calView.setText(myDateFormat.format(date));
-                addBooking(parkName, date);
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), LockerActivity.class);  // Go to lockerActivity
+                i.putExtra("parkName", parkName);
+                DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+                String strDate = dateFormat.format(date);
+                i.putExtra("date", strDate);
                 startActivity(i);
             }
 
@@ -164,55 +166,6 @@ public class BookedNearYouActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void addBooking(String park, Date date){
-        String user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
-        String strDate = dateFormat.format(date);
-        Map<String, Object> booking = new HashMap<>();
-        booking.put("user", user);
-        booking.put("park", park);
-        booking.put("date", strDate);
-        booking.put("hash", user.hashCode());
-
-        db.collection("bookings").document(UUID.randomUUID().toString())
-                .set(booking)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-    }
-
-    private void addBookingDateString(String park, String date) {
-        Map<String, Object> booking = new HashMap<>();
-        booking.put("user", user);
-        booking.put("park", park);
-        booking.put("date", date);
-        booking.put("hash", user.hashCode());
-
-        db.collection("bookings").document(UUID.randomUUID().toString())
-                .set(booking)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
     }
 
 }

@@ -21,5 +21,6 @@
     <string name="facebook_status_fmt">Facebook User: %s</string>
     <string name="signed_out">Sign Out</string>
     <string name="title_activity_card_to_book">Map</string>
+    <string name="locker_main">Select your locker</string>
 
 </resources>

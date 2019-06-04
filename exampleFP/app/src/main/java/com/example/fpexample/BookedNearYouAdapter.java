@@ -50,9 +50,9 @@ public class BookedNearYouAdapter extends RecyclerView.Adapter<BookedNearYouAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                addBookingDateString(user, b.getPark(), b.getDate());
-                Intent i = new Intent(v.getContext(), MainActivity.class);
+                Intent i = new Intent(v.getContext(), LockerActivity.class); // Go to lockerActivity
+                i.putExtra("parkName", b.getPark());
+                i.putExtra("date", b.getDate());
                 v.getContext().startActivity(i);
             }
         });
@@ -76,31 +76,6 @@ public class BookedNearYouAdapter extends RecyclerView.Adapter<BookedNearYouAdap
         }
 
     }
-
-    private void addBookingDateString(String user, String park, String date){
-        Map<String, Object> booking = new HashMap<>();
-        booking.put("user", user);
-        booking.put("park", park);
-        booking.put("date", date);
-        booking.put("hash", user.hashCode());
-
-        db.collection("bookings").document(UUID.randomUUID().toString())
-                .set(booking)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-    }
-
-
 
 }
 

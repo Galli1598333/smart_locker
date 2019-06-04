@@ -82,6 +82,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CardToBookActivity" />
         </activity>
+        <activity
+            android:name=".LockerActivity"
+            android:parentActivityName=".BookedNearYouActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CardToBookActivity" />
+        </activity>
     </application>
 
 </manifest>
