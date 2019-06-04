@@ -29,6 +29,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(mainInt);
             finish();
         } else {
-            info.setText(R.string.signed_out);
+            info.setText(R.string.signed_out2);
         }
     }
 

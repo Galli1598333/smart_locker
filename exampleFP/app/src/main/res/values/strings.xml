@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FPexample</string>
-    <string name="authenticate">Authenticate</string>
+    <string name="authenticate">Open Locker</string>
     <string name="title_home">Home</string>
     <string name="title_account">Account</string>
     <string name="title_book">Book</string>
@@ -10,7 +10,6 @@
     <string name="toBook">Book your smart lock</string>
     <string name="parkToBook">Select a Park</string>
     <string name="inCardAct">In card activity</string>
-    <string name="CaffMap">Caffarella Map</string>
     <string name="CalButt">Select hour</string>
     <string name="clean">Clean</string>
     <string name="profile">Your Profile</string>
@@ -20,7 +19,10 @@
     <string name="fb_login_protocol_scheme">fb188270735413547</string>
     <string name="facebook_status_fmt">Facebook User: %s</string>
     <string name="signed_out">Sign Out</string>
+    <string name="signed_out2">Signed Out</string>
     <string name="title_activity_card_to_book">Map</string>
     <string name="locker_main">Select your locker</string>
+    <string name="booking_home">Your Booking</string>
+    <string name="leave_locker">Leave Locker</string>
 
 </resources>

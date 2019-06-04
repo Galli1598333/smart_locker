@@ -18,9 +18,12 @@ import com.facebook.login.LoginManager;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -44,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView booking;
     private RecyclerView bookedRV;
     private FirestoreRecyclerAdapter bookingAdapter;
-    private List<Booking> bookingList;
+    private String lockName;
+    private boolean lockState;
 
     private FirebaseAuth mAuth;
 
@@ -198,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
         // END SETTINGS PAGE
 
-
     }
 
     private void getAllParks(){
@@ -237,7 +240,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getUserBookings(){
-        Query query = db.collection("bookings").whereEqualTo("user", user);
+        Query query = db.collection("bookings")
+                .whereEqualTo("user", user);
 
         FirestoreRecyclerOptions<Booking> response = new FirestoreRecyclerOptions.Builder<Booking>()
                 .setQuery(query, Booking.class)
@@ -256,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull BookingHolder bookingHolder, int i, @NonNull final Booking booking) {
                 Log.d(TAG, booking.getDate());
+                getLockInfo(booking.getPark(), booking.getLockHash());
                 bookingHolder.parkB.setText(booking.getPark());
                 bookingHolder.dateB.setText(booking.getDate());
                 bookingHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -263,6 +268,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(v.getContext(), CardBookingActivity.class);
                         i.putExtra("park", booking.getPark());
+                        i.putExtra("date", booking.getDate());
+                        i.putExtra("lockHash", booking.getLockHash());
+                        i.putExtra("lockName", lockName);
+                        i.putExtra("lockState", lockState);
                         v.getContext().startActivity(i);
                     }
                 });
@@ -318,4 +327,19 @@ public class MainActivity extends AppCompatActivity {
         bookingAdapter.stopListening();
         toBookAdapter.stopListening();
     }
+
+    private void getLockInfo(String parkName, String lockHash){
+        DocumentReference docRef = db.collection("parks/"+parkName.hashCode()+"/lockers").document(lockHash);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Locker lock = documentSnapshot.toObject(Locker.class);
+                lockName = lock.getLockName();
+                Log.d(TAG, "LockName: " + lockName);
+                lockState = lock.isOpen();
+                Log.d(TAG, "LockState: " + lockState);
+            }
+        });
+    }
+
 }

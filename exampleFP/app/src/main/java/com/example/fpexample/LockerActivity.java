@@ -92,7 +92,7 @@ public class LockerActivity extends AppCompatActivity {
                     lockerHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            addBooking(user, park, date);
+                            addBooking(user, park, date, locker.getLockName());
                             setLock(locker.getLockName(), user);
                             Intent i = new Intent(v.getContext(), MainActivity.class);
                             v.getContext().startActivity(i);
@@ -116,14 +116,22 @@ public class LockerActivity extends AppCompatActivity {
 
     }
 
-    private void addBooking(String user, String park, String strDate){
+    private void addBooking(String user, String park, String strDate, String lockName){
+
+        String lockPark = park + lockName;
+        int lockHash = lockPark.hashCode();
+
+        String hc = user + " " + park + " " + strDate + " " + lockPark;
+        int bookHash = hc.hashCode();
+
         Map<String, Object> booking = new HashMap<>();
         booking.put("user", user);
         booking.put("park", park);
         booking.put("date", strDate);
-        booking.put("hash", user.hashCode());
+        booking.put("lockHash", Integer.toString(lockHash));
+        //booking.put("empty", true);
 
-        db.collection("bookings").document(UUID.randomUUID().toString())
+        db.collection("bookings").document(Integer.toString(bookHash))
                 .set(booking)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -143,6 +151,7 @@ public class LockerActivity extends AppCompatActivity {
         Map<String, Object> lock = new HashMap<>();
         lock.put("user", user);
         lock.put("available", false);
+        lock.put("open", false);
 
         String lockPark = park + lockName;
         int lockHash = lockPark.hashCode();

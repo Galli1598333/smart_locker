@@ -8,14 +8,16 @@ public class Locker {
     private String lockName;
     private String user;
     private boolean available;
+    private boolean open;
 
     public Locker(){
-
     }
 
-    public Locker(String lockName, String user, boolean available) {
+    public Locker(String lockName, String user, boolean available, boolean open) {
+        this.lockName = lockName;
         this.user = user;
         this.available = available;
+        this.open = open;
     }
 
     public String getLockName() {
@@ -42,4 +44,11 @@ public class Locker {
         this.available = available;
     }
 
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setEmpty(boolean empty) {
+        this.open = open;
+    }
 }

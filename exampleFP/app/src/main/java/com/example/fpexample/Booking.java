@@ -10,14 +10,19 @@ public class Booking implements Serializable {
     private String user;
     private String park;
     private String date;
+    private boolean empty;
+    private String lockHash;
 
     public Booking(){ }
 
-    public Booking(String user, String park, String date) {
+    public Booking(String user, String park, String date, boolean empty, String lockHash) {
         this.user = user;
         this.park = park;
         this.date = date;
+        this.empty = empty;
+        this.lockHash = lockHash;
     }
+
 
     public String getUser() {
         return user;
@@ -41,5 +46,21 @@ public class Booking implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean isEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(boolean empty) {
+        this.empty = empty;
+    }
+
+    public String getLockHash() {
+        return lockHash;
+    }
+
+    public void setLockHash(String lockHash) {
+        this.lockHash = lockHash;
     }
 }
