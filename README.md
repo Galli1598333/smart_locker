@@ -13,6 +13,8 @@ In order to install FitBox on your android smartphone you can simply install the
 
 ### Login
 
+In order to access our application, you must be logged in on facebook, you can do that by clicking on the facebook button:
+
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/login.jpg" width="35%" height="35%">
 
 ### Home page
