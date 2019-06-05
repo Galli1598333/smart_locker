@@ -14,6 +14,8 @@ In order to install FitBox on your android smartphone you can simply install the
 
 The architecture of our system is composed only by the Nucleo board and a simple servo:
 
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/archScheme.png" width="75%" height="75%">
+
 ## Usage
 
 ### Login
