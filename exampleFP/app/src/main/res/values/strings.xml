@@ -24,5 +24,9 @@
     <string name="locker_main">Select your locker</string>
     <string name="booking_home">Your Booking</string>
     <string name="leave_locker">Leave Locker</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 
 </resources>

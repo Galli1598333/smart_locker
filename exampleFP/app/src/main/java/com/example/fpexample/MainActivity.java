@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         usernameTV = (TextView) findViewById(R.id.usernameView);
 
         user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        Log.d(TAG, "username: " + user);
 
         usernameTV.setText("Welcome back, " + user);
 
