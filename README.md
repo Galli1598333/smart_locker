@@ -1,5 +1,6 @@
 # FitBox
 <img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg">
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/fitbox-icon.png">
 
 ## Description
 
@@ -69,3 +70,9 @@ Now if you want to open/close the locker you must authenticate you with your fin
 
 ## CREDITS
 
+- Gianluca Capozzi [<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/gitIcon.png" height="20" width="20" >](https://github.com/GianlucaCapozzi)
+					[<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/inIcon.png" height="20" width="20" >](https://www.linkedin.com/in/gianluca-capozzi-b9a75a16b/)
+- Gianmarco Cariggi [<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/gitIcon.png" height="20" width="20" >](https://github.com/giacar)
+					[<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/inIcon.png" height="20" width="20" >](https://www.linkedin.com/in/gianmarco-cariggi/)
+- Gianluca Galli  [<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/gitIcon.png" height="20" width="20" >](https://github.com/Galli1598333)
+					[<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/inIcon.png" height="20" width="20" >](https://www.linkedin.com/in/galli-gianluca/)
