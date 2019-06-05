@@ -11,3 +11,47 @@ In order to install FitBox on your android smartphone you can simply install the
 
 ## Usage
 
+### Login
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/login.jpg" width="35%" height="35%">
+
+### Home page
+
+If you don't have bookings your home screen will be like the following:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/homeNoBookings.jpg" width="35%" height="35%">
+
+otherwise it will be like the following:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/homeBookings.jpg" width="35%" height="35%">
+
+### Book a locker
+
+In order to book a locker you can click on the third icon of the bottom navigation bar and you will be redirected to the following page:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/selPark.jpg" width="35%" height="35%">
+
+and now you need to select a park where you want to go. Once selected the park (clicking on the name) you will be shown a page containing a map with a marker on the park entrance. To select the day and time of the running you can press the button *SELECT HOUR*. You will be redirected to the following page:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/nearYou.jpg" width="35%" height="35%">
+
+Now you have two possibilities:
+- Select a friend from those shown in the list (in this case your running will be the same day and at the same time as your friend's)
+- Click on the *BOOK* button an select a new day and a new hour
+In the second case you will be shown the following page:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/selDate.jpg" width="35%" height="35%">
+
+### Select a locker
+
+Whatever your previous choice was, in order to book a locker you will be redirected to the following page:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/selLocker.jpg" width="35%" height="35%">
+
+Now you can select a locker (obviously red lockers are the ones that are not available). Once selected the locker you will be redirected to the home page and your new booking will be displayed.
+
+### Manage the locker
+
+In order to manage your locker (so open/close and leave it) in the home page you can click on the booking you are interested in managing. You will be redirected to the following page:
+
+
