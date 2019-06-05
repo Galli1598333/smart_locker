@@ -12,6 +12,8 @@ In order to install FitBox on your android smartphone you can simply install the
 
 ## Architecture
 
+The architecture of our system is composed only by the Nucleo board and a simple servo:
+
 ## Usage
 
 ### Login
