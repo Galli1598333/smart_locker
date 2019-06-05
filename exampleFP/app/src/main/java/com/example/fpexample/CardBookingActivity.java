@@ -124,27 +124,6 @@ public class CardBookingActivity extends AppCompatActivity {
 
                 setLockFull(parkName, lockHash);
 
-                /*
-                OkHttpClient client = new OkHttpClient();
-
-                String url = "http://192.168.43.62:8000";
-
-                RequestBody body = RequestBody.create(null, "submit=On");
-                Request req = new Request.Builder().url(url).post(body).build();
-
-
-                Request request = new Request.Builder()
-                        .url(url)
-                        .post(body)
-                        .build();
-
-                try {
-                    Response resp = client.newCall(req).execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                */
-
             }
 
             @Override
