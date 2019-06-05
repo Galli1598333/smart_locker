@@ -54,4 +54,6 @@ Now you can select a locker (obviously red lockers are the ones that are not ava
 
 In order to manage your locker (so open/close and leave it) in the home page you can click on the booking you are interested in managing. You will be redirected to the following page:
 
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/manageB.jpg" width="35%" height="35%">
 
+Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will be deleted both from the db and the home page.
