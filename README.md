@@ -9,6 +9,8 @@ This is an Android app for the IoT 2018/2019 course final project and it is base
 
 In order to install FitBox on your android smartphone you can simply install the .apk file placed in our git repository. During the installation you would be asked from the Google Play Protect service if you want to continue with the installation (this is because our application is not published on the Play Store).
 
+## Architecture
+
 ## Usage
 
 ### Login
@@ -59,3 +61,11 @@ In order to manage your locker (so open/close and leave it) in the home page you
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/manageB.jpg" width="35%" height="35%">
 
 Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will be deleted both from the db and the home page.
+
+## ToDo
+
+- Implement a wearOS application in order to lock and unlock the locker with the smartwatch: in this way you will be able to leave also your smartphone into the locker
+- Implement a push notification system that can inform the users about events that could occur to the locker (for example an electricity failure)
+
+## CREDITS
+
