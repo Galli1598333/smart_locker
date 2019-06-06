@@ -36,8 +36,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/idLinearLayout"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium"
                     tools:textColor="@android:color/black" />
 
 

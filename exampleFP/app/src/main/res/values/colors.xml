@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorAvailable">#a4c639</color>
     <color name="colorBusy">#ff0000</color>
+    <color name="background">#BCD39C</color>
 </resources>

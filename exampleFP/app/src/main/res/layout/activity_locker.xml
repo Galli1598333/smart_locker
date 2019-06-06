@@ -14,7 +14,8 @@
         android:layout_marginTop="31dp"
         android:layout_marginEnd="177dp"
         android:text="@string/locker_main"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:fontFamily="@font/montserrat_regular"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

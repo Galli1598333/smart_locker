@@ -37,6 +37,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/idLinearLayout"
                     android:gravity="center_vertical|center_horizontal"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textSize="25dp"
                     tools:textColor="@android:color/black" />
 
@@ -46,6 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/idLinearLayout"
                     android:gravity="center_vertical|center_horizontal"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textSize="15dp"
                     tools:textColor="@android:color/black" />
 

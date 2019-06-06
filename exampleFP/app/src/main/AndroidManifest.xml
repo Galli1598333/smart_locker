@@ -65,6 +65,9 @@
             android:name=".SignupActivity">
         </activity>
 
+        <activity
+            android:name=".LocalLoginActivity">
+        </activity>
 
         <activity
             android:name=".MainActivity">

@@ -106,6 +106,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), LocalLoginActivity.class);
+                v.getContext().startActivity(i);
+            }
+        });
+
     }
 
     // [START on_start_check_user]

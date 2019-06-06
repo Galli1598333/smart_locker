@@ -7,101 +7,73 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/signupTV"
+    <EditText
+        android:id="@+id/idUsernEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="193dp"
-        android:text="@string/sign_up"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="99dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
         android:id="@+id/emailEditTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.804"
-        app:layout_constraintStart_toEndOf="@+id/emailLbl"
-        app:layout_constraintTop_toBottomOf="@+id/idUsernEditText" />
-
-    <TextView
-        android:id="@+id/emailLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="92dp"
-        android:text="@string/email"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idUsernTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/idUsernEditText" />
 
     <EditText
         android:id="@+id/pwdEditTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
+        android:fontFamily="@font/montserrat_regular"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/pwdLbl"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditTxt" />
-
-    <TextView
-        android:id="@+id/pwdLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="108dp"
-        android:text="@string/password"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditTxt" />
 
     <Button
         android:id="@+id/signUpBtn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="163dp"
+        android:fontFamily="@font/montserrat_regular"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pwdEditTxt" />
 
-    <EditText
-        android:id="@+id/idUsernEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="96dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/idUsernTxt"
-        app:layout_constraintTop_toBottomOf="@+id/signupTV" />
-
-    <TextView
-        android:id="@+id/idUsernTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="108dp"
-        android:text="@string/username"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="261dp"
+        android:layout_height="206dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupTV" />
+        app:srcCompat="@drawable/fitbox_banner"
+        tools:layout_editor_absoluteY="38dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

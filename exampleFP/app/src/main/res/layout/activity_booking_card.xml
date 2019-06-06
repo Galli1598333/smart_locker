@@ -8,12 +8,12 @@
 
     <Button
         android:id="@+id/idAuthButt"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
         android:text="@string/authenticate"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idLockName" />
@@ -25,7 +25,8 @@
         android:layout_marginStart="176dp"
         android:layout_marginTop="104dp"
         android:layout_marginEnd="176dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:fontFamily="@font/montserrat_regular"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -40,7 +41,8 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="136dp"
         android:text="@string/booking_home"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,20 +54,22 @@
         android:layout_marginStart="176dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="177dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idParkName" />
 
     <Button
         android:id="@+id/idLeaveBtn"
-        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="141dp"
         android:text="@string/leave_locker"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idAuthButt" />

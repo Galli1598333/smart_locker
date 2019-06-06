@@ -13,11 +13,11 @@
         android:layout_height="24dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="104dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTV" />
+        app:layout_constraintTop_toBottomOf="@+id/logoHome" />
 
     <TextView
         android:id="@+id/info"
@@ -29,23 +29,11 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="206dp"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
-
-    <TextView
-        android:id="@+id/welcomeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="26dp"
-        android:text="@string/welcome"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/signUpBtn2"
@@ -57,6 +45,7 @@
         android:layout_marginEnd="104dp"
         android:layout_marginBottom="235dp"
         android:text="@string/sign_up"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/loginBtn"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +53,7 @@
 
     <Button
         android:id="@+id/loginBtn"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -71,10 +61,23 @@
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="235dp"
         android:text="@string/login"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintStart_toEndOf="@+id/signUpBtn2"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
+    <ImageView
+        android:id="@+id/logoHome"
+        android:layout_width="260dp"
+        android:layout_height="290dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="71dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fitbox_banner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
