@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FitBox</string>
-    <string name="authenticate">Open Locker</string>
+    <string name="authenticate">Open/Close Locker</string>
+    <string name="close">Close Locker</string>
     <string name="title_home">Home</string>
     <string name="title_account">Account</string>
     <string name="title_book">Book</string>
