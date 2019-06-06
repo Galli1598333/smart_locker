@@ -1,6 +1,6 @@
 # FitBox
 <img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg" width="75%" height="75%">
-<img src="https://github.com/Galli1598333/smart_locker/blob/master/fitbox-banner.png" width="75%" height="75%">
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/fitbox-banner.png" width="50%" height="50%">
 
 ## Description
 
@@ -23,6 +23,16 @@ The architecture of our system is composed only by the Nucleo board and a simple
 In order to access our application,you can use your Facebook profile or you can create a new profile that will be stored in our database on Firebase: 
 
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/splash.jpg" width="35%" height="35%">
+
+### Signup and Login
+
+If you want to create a new account on our application, you can click on the *SIGNUP* button and you will be redirected to the following page:
+ 
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/signup.jpg" width="35%" height="35%">
+
+If you already have an account you can log in by pressing on the *LOGIN* button in the splash screen; in this case you will be redirected to the following page:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/login.jpg" width="35%" height="35%">
 
 ### Home page
 
