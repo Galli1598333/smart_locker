@@ -90,3 +90,7 @@ Now if you want to open/close the locker you must authenticate you with your fin
 					[<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/inIcon.png" height="20" width="20" >](https://www.linkedin.com/in/gianmarco-cariggi/)
 - Gianluca Galli  [<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/gitIcon.png" height="20" width="20" >](https://github.com/Galli1598333)
 					[<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/inIcon.png" height="20" width="20" >](https://www.linkedin.com/in/galli-gianluca/)
+
+## LICENSE
+
+Code is under MIT License
