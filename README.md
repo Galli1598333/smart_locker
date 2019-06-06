@@ -1,6 +1,6 @@
 # FitBox
-<img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg">
-<img src="https://github.com/Galli1598333/smart_locker/blob/master/fitbox-icon.png">
+<img src="http://www.dis.uniroma1.it/sites/default/files/marchio%20logo%20eng%20jpg.jpg" width="75%" height="75%">
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/fitbox-banner.png" width="75%" height="75%">
 
 ## Description
 
@@ -18,11 +18,11 @@ The architecture of our system is composed only by the Nucleo board and a simple
 
 ## Usage
 
-### Login
+### Splash Screen
 
-In order to access our application, you must be logged in on facebook, you can do that by clicking on the facebook button:
+In order to access our application,you can use your Facebook profile or you can create a new profile that will be stored in our database on Firebase: 
 
-<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/login.jpg" width="35%" height="35%">
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/splash.jpg" width="35%" height="35%">
 
 ### Home page
 
