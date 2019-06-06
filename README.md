@@ -14,7 +14,7 @@ In order to install FitBox on your android smartphone you can simply install the
 
 The architecture of our system is the following:
 
-
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/images/diagram.png" width="100%" height="100%">
 
 ## Nucleo Schema
 
