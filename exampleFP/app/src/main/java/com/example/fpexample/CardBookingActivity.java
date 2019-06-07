@@ -199,6 +199,25 @@ public class CardBookingActivity extends AppCompatActivity {
                     }
                 });
 
+        Map<String, Object> booking = new HashMap<>();
+        booking.put("active", false);
+
+        db.collection("bookings").document(Integer.toString(bookID.hashCode()))
+                .set(booking, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+        /*
         db.collection("bookings").document(Integer.toString(bookID.hashCode()))
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -213,6 +232,7 @@ public class CardBookingActivity extends AppCompatActivity {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
+        */
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();

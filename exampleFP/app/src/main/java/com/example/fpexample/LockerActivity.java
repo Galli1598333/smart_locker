@@ -125,11 +125,11 @@ public class LockerActivity extends AppCompatActivity {
         int bookHash = hc.hashCode();
 
         Map<String, Object> booking = new HashMap<>();
+        booking.put("active", true);
         booking.put("user", user);
         booking.put("park", park);
         booking.put("date", strDate);
         booking.put("lockHash", Integer.toString(lockHash));
-        //booking.put("empty", true);
 
         db.collection("bookings").document(Integer.toString(bookHash))
                 .set(booking)

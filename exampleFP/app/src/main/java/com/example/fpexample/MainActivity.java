@@ -242,7 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUserBookings(){
         Query query = db.collection("bookings")
-                .whereEqualTo("user", user);
+                .whereEqualTo("user", user)
+                .whereEqualTo("active", true);
 
         FirestoreRecyclerOptions<Booking> response = new FirestoreRecyclerOptions.Builder<Booking>()
                 .setQuery(query, Booking.class)
