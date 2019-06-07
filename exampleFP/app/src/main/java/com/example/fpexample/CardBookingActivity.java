@@ -99,7 +99,7 @@ public class CardBookingActivity extends AppCompatActivity {
         leave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteBooking(bookID, parkName, lockHash);
+                leaveLocker(bookID, parkName, lockHash);
             }
         });
 
@@ -175,7 +175,7 @@ public class CardBookingActivity extends AppCompatActivity {
                 });
     }
 
-    private void deleteBooking(String bookID, String parkName, String lockHash){
+    private void leaveLocker(String bookID, String parkName, String lockHash){
         Map<String, Object> lock = new HashMap<>();
         if(lockState == true) {
             lock.put("open", false);

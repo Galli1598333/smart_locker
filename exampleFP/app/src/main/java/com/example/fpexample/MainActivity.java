@@ -57,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView parkToBookTV;
     private RecyclerView toBookRV;
     private FirestoreRecyclerAdapter toBookAdapter;
-    private List<ToBook> toBookList;
 
     // Profile page
     private TextView profileTV;
+    private RecyclerView profileRV;
+    private FirestoreRecyclerAdapter profileAdapter;
 
     // Settings page
     private TextView settingsTV;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.GONE);
+                        profileRV.setVisibility(View.GONE);
                         settingsTV.setVisibility(View.GONE);
                         signOutBtn.setVisibility(View.GONE);
                         return true;
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.VISIBLE);
+                        profileRV.setVisibility(View.VISIBLE);
                         settingsTV.setVisibility(View.GONE);
                         signOutBtn.setVisibility(View.GONE);
                         return true;
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         parkToBookTV.setVisibility(View.VISIBLE);
                         toBookRV.setVisibility(View.VISIBLE);
                         profileTV.setVisibility(View.GONE);
+                        profileRV.setVisibility(View.GONE);
                         settingsTV.setVisibility(View.GONE);
                         signOutBtn.setVisibility(View.GONE);
                         return true;
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         toBookTV.setVisibility(View.GONE);
                         parkToBookTV.setVisibility(View.GONE);
                         toBookRV.setVisibility(View.GONE);
+                        profileRV.setVisibility(View.GONE);
                         profileTV.setVisibility(View.GONE);
                         settingsTV.setVisibility(View.VISIBLE);
                         signOutBtn.setVisibility(View.VISIBLE);
@@ -167,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         bookedRV = (RecyclerView) findViewById(R.id.bookedRV);
         bookedRV.setLayoutManager(new LinearLayoutManager(this));
 
-        getUserBookings();
+        getUserActiveBookings();
 
         // END HOME PAGE
 
@@ -186,6 +191,11 @@ public class MainActivity extends AppCompatActivity {
         // START ACCOUNT PAGE
 
         profileTV = (TextView) findViewById(R.id.idProfileHome);
+
+        profileRV = (RecyclerView) findViewById(R.id.profileRV);
+        profileRV.setLayoutManager(new LinearLayoutManager(this));
+
+        getUserDisabledBookings();
 
         // END ACCOUNT PAGE
 
@@ -240,7 +250,36 @@ public class MainActivity extends AppCompatActivity {
         toBookRV.setAdapter(toBookAdapter);
     }
 
-    private void getUserBookings(){
+    private void getUserDisabledBookings(){
+        Query query = db.collection("bookings")
+                .whereEqualTo("user", user)
+                .whereEqualTo("active", false);
+
+        FirestoreRecyclerOptions<Booking> response = new FirestoreRecyclerOptions.Builder<Booking>()
+                .setQuery(query, Booking.class)
+                .build();
+
+        profileAdapter = new FirestoreRecyclerAdapter<Booking, BookingDisabledHolder>(response) {
+
+            @NonNull
+            @Override
+            public BookingDisabledHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.profile_card, parent, false);
+                return new BookingDisabledHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull BookingDisabledHolder bookingDisabledHolder, int i, @NonNull Booking booking) {
+                bookingDisabledHolder.parkBD.setText(booking.getPark());
+                bookingDisabledHolder.dateBD.setText(booking.getDate());
+            }
+        };
+        profileAdapter.notifyDataSetChanged();
+        profileRV.setAdapter(profileAdapter);
+    }
+
+    private void getUserActiveBookings(){
         Query query = db.collection("bookings")
                 .whereEqualTo("user", user)
                 .whereEqualTo("active", true);
@@ -249,19 +288,18 @@ public class MainActivity extends AppCompatActivity {
                 .setQuery(query, Booking.class)
                 .build();
 
-        bookingAdapter = new FirestoreRecyclerAdapter<Booking, BookingHolder>(response) {
+        bookingAdapter = new FirestoreRecyclerAdapter<Booking, BookingActiveHolder>(response) {
 
             @NonNull
             @Override
-            public BookingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public BookingActiveHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.booking_card, parent, false);
-                return new BookingHolder(view);
+                return new BookingActiveHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull BookingHolder bookingHolder, int i, @NonNull final Booking booking) {
-                Log.d(TAG, booking.getDate());
+            protected void onBindViewHolder(@NonNull BookingActiveHolder bookingHolder, int i, @NonNull final Booking booking) {
                 getLockInfo(booking.getPark(), booking.getLockHash());
                 bookingHolder.parkB.setText(booking.getPark());
                 bookingHolder.dateB.setText(booking.getDate());
@@ -283,14 +321,28 @@ public class MainActivity extends AppCompatActivity {
         bookedRV.setAdapter(bookingAdapter);
     }
 
-    public class BookingHolder extends RecyclerView.ViewHolder{
+    public class BookingActiveHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.parkTV)
         TextView parkB;
         @BindView(R.id.dateTV)
         TextView dateB;
 
-        public BookingHolder(View itemView){
+        public BookingActiveHolder(View itemView){
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+    }
+
+    public class BookingDisabledHolder extends RecyclerView.ViewHolder{
+
+        @BindView(R.id.parkTV1)
+        TextView parkBD;
+        @BindView(R.id.dateTV1)
+        TextView dateBD;
+
+        public BookingDisabledHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -321,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         bookingAdapter.startListening();
         toBookAdapter.startListening();
+        profileAdapter.startListening();
     }
 
     @Override
@@ -328,6 +381,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         bookingAdapter.stopListening();
         toBookAdapter.stopListening();
+        profileAdapter.stopListening();
     }
 
     private void getLockInfo(String parkName, String lockHash){

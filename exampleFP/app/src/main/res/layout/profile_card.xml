@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bookedCV1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="7dp"
+        android:elevation="7dp"
+        app:cardCornerRadius="6dp"
+        app:cardPreventCornerOverlap="false">
+
+        <RelativeLayout
+            android:id="@+id/bookedRL1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_light_background"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+
+            <LinearLayout
+                android:id="@+id/bookedLL1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/parkTV1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/idLinearLayout"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textSize="25dp"
+                    tools:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/dateTV1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/idLinearLayout"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textSize="15dp"
+                    tools:textColor="@android:color/black" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

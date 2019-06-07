@@ -86,6 +86,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".ProfileActivity"
+                android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".BookedNearYouActivity"
             android:parentActivityName=".CardToBookActivity">
