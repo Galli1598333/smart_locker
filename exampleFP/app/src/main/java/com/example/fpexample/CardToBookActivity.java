@@ -129,6 +129,7 @@ public class CardToBookActivity extends AppCompatActivity {
     private void getNearBookings(){
         db.collection("bookings")
                 .whereEqualTo("park", parkName)
+                .whereEqualTo("active", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
