@@ -89,6 +89,10 @@ If you click on the second icon (*Account*) of the navigation bar, the following
 
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/profile.jpg" width="35%" height="35%">
 
+If you click on one of the displayed bookings you will see the following details:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/bookingDetails.jpg" width="35%" height="35%">
+
 ## ToDo
 
 - Implement a wearOS application in order to lock and unlock the locker with the smartwatch: in this way you will be able to leave also your smartphone into the locker
