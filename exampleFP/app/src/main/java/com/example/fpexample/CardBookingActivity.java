@@ -207,6 +207,7 @@ public class CardBookingActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                         Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 })
