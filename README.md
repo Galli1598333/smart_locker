@@ -83,6 +83,84 @@ In order to manage your locker (so open/close and leave it) in the home page you
 
 Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will be deleted both from the db and the home page.
 
+## Nucleo Application
+
+In order to open and close the locker, it needs for a board an hardware architecture that permits a servo to move (that represents the lock of the locker). So it needs for a *Nucleo STM32F401* board, on which to install a *X-NUCLEO-IDW01M* that is an Wi-Fi expansion board and finally the servo.
+In order to make all this components working, it needs for an application that manages them.
+
+### Configuration
+
+#### STEP 1
+
+First of all you have to add your Wi-Fi credential in *mbed_app.json* <JSON file. There is two fields you have to modify, as follows:
+
+```json
+{
+    "config": {
+        "wifi-ssid": {
+            "help": "WiFi SSID",
+            "value": "\"PUT_YOUR_SSID\""
+        },
+        "wifi-password": {
+            "help": "WiFi Password",
+            "value": "\"PUT_YOUR_PASSWORD\""
+        }
+    
+	//...
+
+}
+```
+
+####STEP 2
+
+You have to put the link to your Firebase DB JSON Document that contain the *open_door* value of the locker in which you have to put the servo with the board:
+
+```C
+HttpsRequest* request = new HttpsRequest(wifimodule, SSL_CA_PEM, HTTP_GET, "PUT YOUR FIREBASE DATABASE LINK");
+```
+
+It is important that the file you get from the previous instruction has a field called *open*, with a Boolean subfield called *boolean value* as follows (this is an example):
+
+```JSON
+{
+  "name": "YOUR_LINK",
+  "fields": {
+    "available": {
+      "booleanValue": false
+    },
+    "user": {
+      "stringValue": "Gianmarco Cariggi"
+    },
+    "open": {
+      "booleanValue": false
+    },
+    "lockName": {
+      "stringValue": "Locker1"
+    }
+  },
+  "createTime": "2019-06-04T14:44:55.338801Z",
+  "updateTime": "2019-06-08T09:17:08.841023Z"
+}
+```
+
+In this way the *getLockerState()* function can recognize the value of the locker and compare with its local variable of the servo.
+
+#### STEP 3
+
+Since the previous instruction (STEP 3) is an HTTPS request, it needs to put also the public key of CA authority because mbedOS doesn't have it. In the code there is a public key of Google Trust Services that is needed for Firebase DB, the key is valid in June 2019, but it can't be valid in the future.
+If it's not working, you have to modify this variable, adding the public key in PEM format:
+
+```C
+static const char SSL_CA_PEM[]="-----BEGIN CERTIFICATE-----\n"
+                                //...
+                                "-----END CERTIFICATE-----"
+```
+
+#### STEP 4
+
+At this point, it remains to download the needed libraries through the link contained in the .lib files. After you do this, you have to compile the source code using an ARM compiler as ggc ARM. In our case we used the free web IDE mbed compiler [here](https://ide.mbed.com/).
+You obtain the bin file which you have to copy inside the Nucleo board, using a serial terminal (at *9600 baud*), you can see all the information messages.
+
 ## ToDo
 
 - Implement a wearOS application in order to lock and unlock the locker with the smartwatch: in this way you will be able to leave also your smartphone into the locker

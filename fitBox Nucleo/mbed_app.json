@@ -1,0 +1,31 @@
+{
+    "config": {
+        "wifi-ssid": {
+            "help": "WiFi SSID",
+            "value": "\"PUT_YOUR_SSID\""
+        },
+        "wifi-password": {
+            "help": "WiFi Password",
+            "value": "\"PUT_YOUR_PASSWORD\""
+        }
+    },
+    "macros": [
+        "MBEDTLS_SHA1_C",
+        "MBEDTLS_MPI_MAX_SIZE=1024",
+        "MBEDTLS_MPI_WINDOW_SIZE=1",
+        "MBEDTLS_TEST_NULL_ENTROPY",
+        "MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES",
+        "MBED_HEAP_STATS_ENABLED=1"
+    ],
+    "target_overrides": {
+        "*": {
+            "platform.stdio-convert-newlines": true,
+            "idw0xx1.expansion-board": "IDW01M1",
+            "idw0xx1.provide-default": true,
+            "idw0xx1.tx": "PA_9",
+            "idw0xx1.rx": "PA_10",
+            "drivers.uart-serial-txbuf-size": 512,
+            "drivers.uart-serial-rxbuf-size": 512
+        }
+    }
+}
