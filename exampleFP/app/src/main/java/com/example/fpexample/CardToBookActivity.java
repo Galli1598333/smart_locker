@@ -106,7 +106,7 @@ public class CardToBookActivity extends AppCompatActivity {
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(coordinates[0], coordinates[1]), 17));
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(coordinates[0], coordinates[1]))
-                        .title(parkName + " entry"));
+                        .title(parkName + " entrance"));
             }
         });
 

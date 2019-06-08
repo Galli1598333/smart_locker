@@ -29,6 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -232,9 +236,12 @@ public class CardBookingActivity extends AppCompatActivity {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
-
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+        Date currentTime = Calendar.getInstance().getTime();
+        String leaveTime = dateFormat.format(currentTime);
         Map<String, Object> booking = new HashMap<>();
         booking.put("active", false);
+        booking.put("leave", leaveTime);
 
         db.collection("bookings").document(Integer.toString(bookID.hashCode()))
                 .set(booking, SetOptions.merge())
@@ -253,7 +260,6 @@ public class CardBookingActivity extends AppCompatActivity {
                 });
 
         Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
         finish();
     }
 
@@ -296,6 +302,7 @@ public class CardBookingActivity extends AppCompatActivity {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
+
     }
 
 }

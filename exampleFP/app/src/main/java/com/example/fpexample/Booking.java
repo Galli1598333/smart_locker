@@ -12,15 +12,17 @@ public class Booking implements Serializable {
     private String date;
     private boolean active;
     private String lockHash;
+    private String leave;
 
     public Booking(){ }
 
-    public Booking(String user, String park, String date, boolean active, String lockHash) {
+    public Booking(String user, String park, String date, boolean active, String lockHash, String leave) {
         this.user = user;
         this.park = park;
         this.date = date;
         this.active = active;
         this.lockHash = lockHash;
+        this.leave = leave;
     }
 
 
@@ -62,5 +64,13 @@ public class Booking implements Serializable {
 
     public void setLockHash(String lockHash) {
         this.lockHash = lockHash;
+    }
+
+    public String getLeave(){
+        return leave;
+    }
+
+    public void setLeave(String leave){
+        this.leave = leave;
     }
 }

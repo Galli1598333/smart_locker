@@ -14,6 +14,12 @@
     <string name="CalButt">Select hour</string>
     <string name="clean">Clean</string>
     <string name="profile">Your Profile</string>
+    <string name="details">Details</string>
+    <string name="park">Park</string>
+    <string name="date">Date</string>
+    <string name="back">Go Back</string>
+    <string name="locker">Locker</string>
+    <string name="duration">Duration</string>
     <string name="nearyouhome">Friends near you</string>
     <string name="book">Book</string>
     <string name="facebook_app_id">188270735413547</string>

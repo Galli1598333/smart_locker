@@ -270,9 +270,22 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull BookingDisabledHolder bookingDisabledHolder, int i, @NonNull Booking booking) {
+            protected void onBindViewHolder(@NonNull final BookingDisabledHolder bookingDisabledHolder, int i, @NonNull final Booking booking) {
+                final String leaveTime = getIntent().getStringExtra("leaveTime");
+                getLockInfo(booking.getPark(), booking.getLockHash());
                 bookingDisabledHolder.parkBD.setText(booking.getPark());
                 bookingDisabledHolder.dateBD.setText(booking.getDate());
+                bookingDisabledHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), ProfileActivity.class);
+                        i.putExtra("park", booking.getPark());
+                        i.putExtra("date", booking.getDate());
+                        i.putExtra("locker", lockName);
+                        i.putExtra("leaveTime", booking.getLeave());
+                        v.getContext().startActivity(i);
+                    }
+                });
             }
         };
         profileAdapter.notifyDataSetChanged();
