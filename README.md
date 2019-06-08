@@ -81,7 +81,13 @@ In order to manage your locker (so open/close and leave it) in the home page you
 
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/manageB.jpg" width="35%" height="35%">
 
-Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will be deleted both from the db and the home page.
+Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will become disabled. If you click on the *DELETE BOOKING* button your booking will be deleted. Once you leave the locker the corresponding booking will be displayed in the profile page.
+
+### See details about past bookings
+
+If you click on the second icon (*Account*) of the navigation bar, the following page will be displayed:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/profile.jpg" width="35%" height="35%">
 
 ## ToDo
 
