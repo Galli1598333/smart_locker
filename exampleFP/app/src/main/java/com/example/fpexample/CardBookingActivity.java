@@ -1,11 +1,13 @@
 package com.example.fpexample;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +36,7 @@ import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.FragmentActivity;
@@ -42,6 +45,7 @@ public class CardBookingActivity extends AppCompatActivity {
 
     private Button authenticate;
     private Button leave;
+    private Button delete;
 
     private TextView parkNameTV;
     private TextView lockNameTV;
@@ -92,6 +96,7 @@ public class CardBookingActivity extends AppCompatActivity {
 
         authenticate = (Button) findViewById(R.id.idAuthButt);
         leave = (Button) findViewById(R.id.idLeaveBtn);
+        delete = (Button) findViewById(R.id.idDeleteBtn);
 
         final String bookID = user + " " + parkName + " " + date + " " + parkName + lockName;
         Log.d(TAG, "BookID: " + bookID);
@@ -100,6 +105,35 @@ public class CardBookingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 leaveLocker(bookID, parkName, lockHash);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Confirm delete !");
+                builder.setMessage("You are about to delete your booking. Do you really want to proceed ?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteBooking(bookID, parkName, lockHash);
+                        Toast.makeText(getApplicationContext(), "You've choosen to delete you booking", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        getApplicationContext().startActivity(i);
+                        finish();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "You've changed your mind", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.show();
             }
         });
 
@@ -218,7 +252,36 @@ public class CardBookingActivity extends AppCompatActivity {
                     }
                 });
 
-        /*
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void deleteBooking(String bookID, String parkName, String lockHash){
+
+        Map<String, Object> lock = new HashMap<>();
+        if(lockState == true) {
+            lock.put("open", false);
+        }
+        lock.put("available", true);
+        lock.put("user", "");
+        lockState = false;
+
+        db.collection("parks/"+parkName.hashCode()+"/lockers").document(lockHash)
+                .set(lock, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
         db.collection("bookings").document(Integer.toString(bookID.hashCode()))
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -233,10 +296,6 @@ public class CardBookingActivity extends AppCompatActivity {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
-        */
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
     }
 
 }
