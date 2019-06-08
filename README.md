@@ -121,7 +121,7 @@ First of all you have to add your Wi-Fi credential in *mbed_app.json* <JSON file
 }
 ```
 
-####STEP 2
+#### STEP 2
 
 You have to put the link to your Firebase DB JSON Document that contain the *open_door* value of the locker in which you have to put the servo with the board:
 
