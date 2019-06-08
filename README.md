@@ -96,7 +96,7 @@ If you click on one of the displayed bookings you will see the following details
 ## ToDo
 
 - Implement a wearOS application in order to lock and unlock the locker with the smartwatch: in this way you will be able to leave also your smartphone into the locker
-- Implement a push notification system that can inform the users about events that could occur to the locker (for example an electricity failure)
+- Add a backup battery management system, a NFC reader and implement a push notification system that can inform the users about events that could occur to the locker (for example an electricity failure)
 
 ## CREDITS
 
