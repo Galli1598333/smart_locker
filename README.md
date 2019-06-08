@@ -4,7 +4,7 @@
 
 ## Description
 
-This is an Android app for the IoT 2018/2019 course final project and it is based on [Firebase](https://firebase.google.com) and [Nucleo-64 STM32F401 board](https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f401re.html). The idea is to make it easier to find a public and secure place where you can leave your belongings in order to go running in total freedom and also to find other people near you with your same interests.
+This is an Android app for the IoT 2018/2019 course final project and it is based on [Firebase](https://firebase.google.com) and [Nucleo-64 STM32F401 board](https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f401re.html) + [X-NUCLEO-IDW01M1 expansion board](https://www.st.com/en/ecosystems/x-nucleo-idw01m1.html). The idea is to make it easier to find a public and secure place where you can leave your belongings in order to go running in total freedom and also to find other people near you with your same interests.
 
 ## Installation
 
@@ -18,7 +18,7 @@ The architecture of our system is the following:
 
 ## Nucleo Schema
 
-The schema is composed only by the Nucleo board and a simple servo:
+The schema is composed only by the Nucleo board + the Wi-Fi expansion board ontop and a simple servo:
 
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/archScheme.png" width="75%" height="75%">
 
