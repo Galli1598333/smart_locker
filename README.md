@@ -81,7 +81,17 @@ In order to manage your locker (so open/close and leave it) in the home page you
 
 <img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/manageB.jpg" width="35%" height="35%">
 
-Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will be deleted both from the db and the home page.
+Now if you want to open/close the locker you must authenticate you with your fingerprint. If you want to leave your locker you must click on the *LEAVE LOCKER* button. If you leave your locker, your booking will become disabled. If you click on the *DELETE BOOKING* button your booking will be deleted. Once you leave the locker the corresponding booking will be displayed in the profile page.
+
+### See details about past bookings
+
+If you click on the second icon (*Account*) of the navigation bar, the following page will be displayed:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/profile.jpg" width="35%" height="35%">
+
+If you click on one of the displayed bookings you will see the following details:
+
+<img src="https://github.com/Galli1598333/smart_locker/blob/master/mockup/bookingDetails.jpg" width="35%" height="35%">
 
 ## Nucleo Application
 
@@ -164,7 +174,7 @@ You obtain the bin file which you have to copy inside the Nucleo board, using a 
 ## ToDo
 
 - Implement a wearOS application in order to lock and unlock the locker with the smartwatch: in this way you will be able to leave also your smartphone into the locker
-- Implement a push notification system that can inform the users about events that could occur to the locker (for example an electricity failure)
+- Add a backup battery management system, a NFC reader and implement a push notification system that can inform the users about events that could occur to the locker (for example an electricity failure)
 
 ## CREDITS
 
