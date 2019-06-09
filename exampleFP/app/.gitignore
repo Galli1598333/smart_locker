@@ -1,1 +1,6 @@
 /build
+
+google-services.json
+
+/src/release
+/src/main/res/values/strings.xml
