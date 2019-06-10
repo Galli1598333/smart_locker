@@ -48,7 +48,7 @@ static const char SSL_CA_PEM[]="-----BEGIN CERTIFICATE-----\n"
 
 DigitalOut myLed(LED1);
 InterruptIn  myButton2(USER_BUTTON);
-//InterruptIn  myButton(D10);
+InterruptIn  myButton(D10);
 
 char jsonSource[2048];
 
@@ -73,15 +73,14 @@ void pressed(){
             myServo.pulsewidth_us(i);
             wait_ms(TIME);
         }
-        open_door = true;
     }
     else if(open_door == true){
         for (int i=MAX;i>=MIN;i-=STEP){
             myServo.pulsewidth_us(i);
             wait_ms(TIME);
         }
-        open_door = false;
     }
+    open_door = last_state;
     myLed = !myLed;
     wait(0.2);
     myLed = !myLed;
@@ -148,7 +147,7 @@ int poolRequest(){
     //GET data
     printf("\n\rTrying to fetch page...\n\r");    
     NetworkInterface* wifimodule = (NetworkInterface*) wifi;
-    HttpsRequest* request = new HttpsRequest(wifimodule, SSL_CA_PEM, HTTP_GET, "PUT YOUR FIREBASE DATABASE LINK");
+    HttpsRequest* request = new HttpsRequest(wifimodule, SSL_CA_PEM, HTTP_GET, "https://firestore.googleapis.com/v1beta1/projects/smartlocker-e57ce/databases/(default)/documents/parks/1549029155/lockers/87473014");
     HttpResponse* response;
     response = request->send(NULL, 0);    // execute the request
     
@@ -175,9 +174,8 @@ int poolRequest(){
                 printf("Can't get locker state from JSON file, ignoring it\n\r");
             else {
                 if (open_door != last_state) {
-                    open_door = last_state;
                     printf("Move the servo!\n\r");
-                    pressed();  // move the servo
+                    pressed();  // move the servo 
                 }
                 else 
                     printf("Locker state doesn't change\n\r");
@@ -224,9 +222,7 @@ int main() {
         } while (ret!=0);
         
         while(true){
-            //myButton.fall(&pressed);  
-            //myButton.rise(&pressed);  
-            myButton2.fall(&pressedUser);  // restart code if press USER
+            myButton2.fall(&pressedUser);  // restart code if pressed
             
             if (restart) {
                 printf("Restart=%s\n\r", restart ? "true" : "false");
@@ -237,7 +233,7 @@ int main() {
             if (!ret) printf("Pool data successful\n\r");
             else printf("Some problem with pool function (see above)\n\r");
             
-            wait(3); // Sleep for 3 seconds
+            wait(1); // Sleep for 1 second
         }
         
         wifi->disconnect();
