@@ -25,8 +25,8 @@
 #define CLOCK_SOURCE                                                          USE_PLL_HSE_EXTC|USE_PLL_HSI                                                                     // set by target:NUCLEO_F401RE
 #define HTTP_RECEIVE_BUFFER_SIZE                                              8192                                                                                             // set by library:mbed-http
 #define LPTICKER_DELAY_TICKS                                                  1                                                                                                // set by target:FAMILY_STM32
-#define MBED_CONF_APP_WIFI_PASSWORD                                           "ancientraven661"                                                                                // set by application
-#define MBED_CONF_APP_WIFI_SSID                                               "NETGEAR04-2"                                                                                    // set by application
+#define MBED_CONF_APP_WIFI_PASSWORD                                           "PUT_YOUR_PASSWORD"                                                                                // set by application
+#define MBED_CONF_APP_WIFI_SSID                                               "PUT_YOUR_SSID"                                                                                    // set by application
 #define MBED_CONF_ATMEL_RF_ASSUME_SPACED_SPI                                  1                                                                                                // set by library:atmel-rf[STM]
 #define MBED_CONF_ATMEL_RF_FULL_SPI_SPEED                                     7500000                                                                                          // set by library:atmel-rf
 #define MBED_CONF_ATMEL_RF_FULL_SPI_SPEED_BYTE_SPACING                        250                                                                                              // set by library:atmel-rf
